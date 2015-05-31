@@ -60,11 +60,5 @@ public class HashMapOpenAddressingTest {
         hashMap.put(6,1);
         hashMap.put(7,1);
         hashMap.put(8,1);
-        hashMap.put(9,1);
-        hashMap.put(10,1);
-        hashMap.put(11,1);
-        hashMap.put(12,1);
-        hashMap.put(13,1);
-        hashMap.put(14,1);
     }
 }

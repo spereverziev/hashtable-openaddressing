@@ -5,7 +5,6 @@ package com.spereverziev;
  */
 public class HashMapOpenAddressing implements SimpleMap {
 
-//    private static final int HASHTABLE_SIZE = 101107;
     private static final int HASHTABLE_SIZE = 7;
 
     private HashTableEntry[] table;
