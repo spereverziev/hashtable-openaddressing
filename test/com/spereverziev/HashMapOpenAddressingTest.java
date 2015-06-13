@@ -15,16 +15,21 @@ public class HashMapOpenAddressingTest {
         SimpleMap hashMap = new HashMapOpenAddressing();
         Assert.assertEquals(0, hashMap.size());
 
-        hashMap.put(1, 2L);
-        hashMap.put(2, 2L);
+        hashMap.put(-1, 2L);
+        hashMap.put(12, 2L);
         Assert.assertEquals(hashMap.size(), 2);
 
-        hashMap.put(3, 3l);
+        hashMap.put(-33, 3l);
         Assert.assertEquals(hashMap.size(), 3);
 
-        Assert.assertThat(hashMap.get(1), is(2L));
-        Assert.assertThat(hashMap.get(2), is(2L));
-        Assert.assertThat(hashMap.get(3), is(3L));
+        Assert.assertThat(hashMap.get(-1), is(2L));
+        Assert.assertThat(hashMap.get(12), is(2L));
+        Assert.assertThat(hashMap.get(-33), is(3L));
+    }
+
+    @Test
+    public void testNegativeKeys() {
+
     }
 
     @Test
@@ -35,8 +40,8 @@ public class HashMapOpenAddressingTest {
         hashMap.put(8, 78);
         hashMap.put(15, 64);
 
-        Assert.assertThat(hashMap.get(8), is(78L));
-        Assert.assertThat(hashMap.get(15), is(64L));
+        Assert.assertThat(hashMap.get(8), is(78));
+        Assert.assertThat(hashMap.get(15), is(64));
         Assert.assertThat(hashMap.size(), is(2));
     }
 

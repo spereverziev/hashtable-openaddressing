@@ -3,7 +3,7 @@ package com.spereverziev;
 /**
  * Created by spereverziev on 29.05.15.
  */
-public class HashMapOpenAddressing implements SimpleMap {
+public class HashMapOpenAddressing<K,V>  implements SimpleMap<K,V>{
 
     private static final int HASHTABLE_SIZE = 7;
 
@@ -13,31 +13,28 @@ public class HashMapOpenAddressing implements SimpleMap {
     public HashMapOpenAddressing() {
         table = new HashTableEntry[HASHTABLE_SIZE];
         numberOfEntries = 0;
-        for (int i = 0; i < table.length; i++) {
-            table[i] = null;
-        }
     }
 
-    private int hash(int k, int probe) {
-        return (simpleHash(k) + probe * doubleHashing(k)) % HASHTABLE_SIZE;
+    private int hash(K k, int probe) {
+        return Math.abs(simpleHash(k.hashCode()) + probe * doubleHashing(k)) % HASHTABLE_SIZE;
     }
 
     private int simpleHash(int k) {
         return k % HASHTABLE_SIZE;
     }
 
-    private int doubleHashing(int k) {
-        return 1 + (k % (HASHTABLE_SIZE -1));
+    private int doubleHashing(K k) {
+        return 1 + (k.hashCode() % (HASHTABLE_SIZE -1));
     }
 
     @Override
-    public Long get(int key) {
+    public V get(K key) {
         int probe = 0;
         while (probe <= HASHTABLE_SIZE) {
             int index = hash(key, probe);
             HashTableEntry tableEntry = table[index];
             if (tableEntry != null && tableEntry.getKey() == key) {
-                return tableEntry.getValue();
+                return (V)tableEntry.getValue();
             } else {
                 probe++;
             }
@@ -47,12 +44,12 @@ public class HashMapOpenAddressing implements SimpleMap {
     }
 
     @Override
-    public void put(int key, long value) {
+    public void put(K key, V value) {
         int probe = 0;
         while(probe <= HASHTABLE_SIZE) {
             int index = hash(key, probe);
             if (table[index] == null) {
-                table[index] = new HashTableEntry(key, value);
+                table[index] = new HashTableEntry<K, V>(key, value);
                 numberOfEntries++;
                 return;
             } else {
@@ -61,6 +58,7 @@ public class HashMapOpenAddressing implements SimpleMap {
         }
         throw new ArrayIndexOutOfBoundsException("Hashtable is full");
     }
+
 
     @Override
     public int size() {
